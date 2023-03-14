@@ -6,7 +6,7 @@ import { useState } from 'react';
 import ModalMovie from './ModalMovie';
 
 function Movie(props) {
-    const [showFlag, setShowFlag] = useState(false);
+    const [showFlag, setShowFlag] = useState(false); 
     const [clickMovie, setClickMoviE] = useState({});
     const handleShow = (item) => {
         setClickMoviE(item);

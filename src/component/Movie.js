@@ -11,9 +11,13 @@ function Movie(props) {
     const [showFlag, setShowFlag] = useState(false); 
 
     const [clickMovie, setClickMoviE] = useState({});
-    
+    //this state to get me the info that related to the same card 
+
+
+
     const handleShow = (item) => {
         setClickMoviE(item);
+
         setShowFlag(true);
     }
 
@@ -32,11 +36,17 @@ function Movie(props) {
                     <Card.Text>
                         <p>{props.a.overview} </p>
                     </Card.Text>
+
                     <Button variant="primary" onClick={() => { handleShow(props.a) }}>Add to fav</Button>
 
                 </Card.Body>
 
                 <ModalMovie showFlag={showFlag} handleclose={handleclose} MovieData={clickMovie} />
+
+                {/* showflag by defult is hideen (false), cuz of that we pass the showflag to the model to show me the modal inside the modalMOVIE   */}
+{/* the same thing to use the handle close  */}
+
+
             </Card>
         </Col>
 

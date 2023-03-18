@@ -9,20 +9,20 @@ import ModalFavmovie from './ModalFavmovie';
 
 function Favmovie(props) {
 
-    
-
-    const newDATAfromUpdatereq = (arrData) =>{
+    const newDATAfromUpdatereq = (arrData) => {
 
         props.newFun(arrData);
-      }
-      
-      
+        // pass this function to chiled to un-refresh the page when do update
+    }
+
 
 
 
     const [showFlag, setShowFlag] = useState(false);
 
     const [clickMovie, setClickMoviE] = useState({});
+    //this state to get me the info that related to the same card 
+
 
     const handleShow = () => {
         setShowFlag(true);
@@ -33,10 +33,19 @@ function Favmovie(props) {
     }
 
     const DeletItem = async () => {
-        const serverURL = `https://movies-library-production-c3da.up.railway.app/getMovies/${props.item.id}`;
+        const serverURL = `${process.env.REACT_APP_URLSERVER}/getMovies/${props.item.id}`;
         const deletButton = await axios.delete(serverURL)
+        // befor invok the dana - in  server.js (backend) i should get the data from server (getHandler = query) & insert it inside the deletHandler 
+        // then do newData1
         const newData1 = deletButton.data;
         props.newFun(newData1);
+
+        //(newFun)this is the name of the function that i passed from parent
+        // لما اعمل ديليت اون كليك بياخد اللي انحذف و برججع لل بيرنت باقي الداتا المحفوظة بالداتا بيز 
+        // i should breng tha data that i want to delete it from the get that inside the parent using (newFun)
+        // i can pass the data to parent from childe using props just by using (function)
+        // we passd the the nefFun as props from the parent 
+
     }
     return (
         <>
@@ -49,13 +58,14 @@ function Favmovie(props) {
                         <Card.Text>
                             <p>{props.item.comment} </p>
                         </Card.Text>
-                        {/* <Button variant="primary" onClick={() => { handleShow() }}>Add to fav</Button> */}
-                        <Button variant="success" onClick={()=>{
+
+
+                        <Button variant="success" onClick={() => {
                             handleShow();
                             setClickMoviE(props.item)
-                        }}>Update</Button>{' '}
+                        }}>Update</Button>
 
-                        <Button variant="danger" onClick={DeletItem}>Delete</Button>{' '}
+                        <Button variant="danger" onClick={DeletItem}>Delete</Button>
 
                     </Card.Body>
 
@@ -65,7 +75,8 @@ function Favmovie(props) {
 
 
 
-            <ModalFavmovie MovieData={clickMovie} handleclose={handleclose} handleShow={handleShow} showFlag={showFlag}  secfun={newDATAfromUpdatereq}/>
+            <ModalFavmovie MovieData={clickMovie} handleclose={handleclose} handleShow={handleShow} showFlag={showFlag}
+                secfun={newDATAfromUpdatereq} />
         </>
     )
 }

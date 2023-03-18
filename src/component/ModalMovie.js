@@ -14,11 +14,12 @@ function ModalMovie(props) {
     const [comments, setComment] = useState("")
     // to add comment 
 
-    const [clientData, setClientData] = useState([])
-    
     const art = async (e) => {
         try {
             e.preventDefault();
+            // to undo refresh on submit 
+
+
             const article = {
                 title: props.MovieData.title,
                 release_date: props.MovieData.release_date,
@@ -26,16 +27,14 @@ function ModalMovie(props) {
                 overview: props.MovieData.overview,
                 comment: comments
             };
-            const dataWait = await axios.post('https://movies-library-production-c3da.up.railway.app/getMovies', article)
+            const dataWait = await axios.post(`${process.env.REACT_APP_URLSERVER}/getMovies`, article)
             // setClientData(dataWait);
         }
         catch (error) {
             console.log("error");
         }
     }
-    useEffect(() => {
-        art();
-    }, [clientData])
+
 
 
     return (
@@ -48,22 +47,24 @@ function ModalMovie(props) {
 
             </Modal.Body>
             <Modal.Footer>
+
                 <Form onSubmit={art}>
+                    {/* on submit just for forms , & well send event & do a refresh by defult */}
 
                     <Form.Group className="mb-3" >
                         <Form.Label >comment</Form.Label>
                         {/* to add a comment and prient it in the Data Base you should add a value & onchange */}
                         <Form.Control as="textarea" rows={3} value={comments} onChange={(ev) => {
                             setComment(ev.target.value)
+                            // when the user chang or add some info to his form & take the info direct (onchange) using the (setter) that related to the same state & we should giv it a value and the value of it is the variable that inside the state 
+
+
                         }} />
 
                     </Form.Group>
                     <Button variant="secondary" onClick={props.handleclose}>
                         Close
                     </Button>
-                    {/* <Button variant="primary" onClick={articleId}>
-                        Save Changes
-                    </Button> */}
 
                     <button className='btn btn-primary' type="submit" onClick={props.handleclose}>Submit</button>
                 </Form>

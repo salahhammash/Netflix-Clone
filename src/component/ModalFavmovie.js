@@ -13,14 +13,22 @@ function ModalFavmovie(props) {
     const UpdateItem = async (e) => {
 
         e.preventDefault();
-        const serverURL = `https://movies-library-production-c3da.up.railway.app/getMovies/${props.MovieData.id}`;
+        // when you do a changes will show you what you changed without need to do a refresh  
+
+        const serverURL = `${process.env.REACT_APP_URLSERVER}/getMovies/${props.MovieData.id}`;
 
         const newObj = { comment: e.target.changecomment.value }
 
-        const UpdateButton = await axios.put(serverURL,newObj)
+
+
+        const UpdateButton = await axios.put(serverURL, newObj)
         const newData1 = UpdateButton.data;
         props.secfun(newData1)
-        
+        //(secFun)this is the name of the function that i passed from parent 
+        // i should breng tha data that i want to update it from the get that i have inside the parent (favlist) but using (secfun) that store the get data inside it in (favmovie )
+        // we took the data from the parent (favlist ) by favmovie 
+        //لانو ما بقدر اروح مباشرة على الفيف ليست 
+
     }
 
 
@@ -42,14 +50,19 @@ function ModalFavmovie(props) {
                         <Form.Label >comment</Form.Label>
                         {/* to add a comment and prient it in the Data Base you should add a value & onchange */}
                         <Form.Control name='changecomment' defaultValue={props.MovieData.comment} as="textarea" rows={3} />
+                        {/* //defaultValue to show me the text or the comment that i changed after update or before 
+                        
+                        &&&
+
+                        should give it a name='changecomment' & pass the value inside function update
+                        
+                        */}
 
                     </Form.Group>
                     <Button variant="secondary" onClick={props.handleclose}>
                         Close
                     </Button>
-                    {/* <Button variant="primary" onClick={articleId}>
-                        Save Changes
-                    </Button> */}
+                  
 
                     <button className='btn btn-primary' type="submit" onClick={props.handleclose}>Submit</button>
                 </Form>

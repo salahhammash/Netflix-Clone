@@ -20,6 +20,7 @@ function ModalFavmovie(props) {
         const UpdateButton = await axios.put(serverURL,newObj)
         const newData1 = UpdateButton.data;
         props.secfun(newData1)
+        
     }
 
 

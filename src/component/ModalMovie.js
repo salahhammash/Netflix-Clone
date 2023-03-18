@@ -16,7 +16,7 @@ function ModalMovie(props) {
 
     const [clientData, setClientData] = useState([])
 
-   
+
 
 
 
@@ -74,10 +74,11 @@ function ModalMovie(props) {
                 </Form>
 
             </Modal.Footer>
+
         </Modal>
 
 
     )
 }
 
-export default ModalMovie;
+export default ModalMovie;          

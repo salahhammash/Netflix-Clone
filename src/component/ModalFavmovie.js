@@ -1,41 +1,29 @@
-
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
-// import React from 'react';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
 
-function ModalMovie(props) {
-
-    const [comments, setComment] = useState("")
+function ModalFavmovie(props) {
     // to add comment 
 
-    const [clientData, setClientData] = useState([])
-    
-    const art = async (e) => {
-        try {
-            e.preventDefault();
-            const article = {
-                title: props.MovieData.title,
-                release_date: props.MovieData.release_date,
-                poster_path: props.MovieData.poster_path,
-                overview: props.MovieData.overview,
-                comment: comments
-            };
-            const dataWait = await axios.post('https://movies-library-production-c3da.up.railway.app/getMovies', article)
-            // setClientData(dataWait);
-        }
-        catch (error) {
-            console.log("error");
-        }
+    const UpdateItem = async (e) => {
+
+        e.preventDefault();
+        const serverURL = `https://movies-library-production-c3da.up.railway.app/getMovies/${props.MovieData.id}`;
+
+        const newObj = { comment: e.target.changecomment.value }
+
+        const UpdateButton = await axios.put(serverURL,newObj)
+        const newData1 = UpdateButton.data;
+        props.secfun(newData1)
+        
     }
-    useEffect(() => {
-        art();
-    }, [clientData])
+
+
 
 
     return (
@@ -48,14 +36,12 @@ function ModalMovie(props) {
 
             </Modal.Body>
             <Modal.Footer>
-                <Form onSubmit={art}>
+                <Form onSubmit={UpdateItem}>
 
                     <Form.Group className="mb-3" >
                         <Form.Label >comment</Form.Label>
                         {/* to add a comment and prient it in the Data Base you should add a value & onchange */}
-                        <Form.Control as="textarea" rows={3} value={comments} onChange={(ev) => {
-                            setComment(ev.target.value)
-                        }} />
+                        <Form.Control name='changecomment' defaultValue={props.MovieData.comment} as="textarea" rows={3} />
 
                     </Form.Group>
                     <Button variant="secondary" onClick={props.handleclose}>
@@ -76,4 +62,4 @@ function ModalMovie(props) {
     )
 }
 
-export default ModalMovie;          
+export default ModalFavmovie;          

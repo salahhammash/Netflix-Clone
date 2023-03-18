@@ -2,12 +2,16 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
-// import MovieList from './MovieList';
 import ModalMovie from './ModalMovie';
 
+
+
 function Movie(props) {
+
     const [showFlag, setShowFlag] = useState(false); 
+
     const [clickMovie, setClickMoviE] = useState({});
+    
     const handleShow = (item) => {
         setClickMoviE(item);
         setShowFlag(true);
@@ -16,6 +20,8 @@ function Movie(props) {
     const handleclose = () => {
         setShowFlag(false);
     }
+
+
     return (
 
         <Col>
